@@ -12,6 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
 import random
 import os
+import getpass
 
 import korail_method as km
 
@@ -27,7 +28,10 @@ is_find_ticket = False
 timeout = 0
 cnt = 0
 
-pswd = input('비밀번호를 입력하세요')
+botToken = input('Bot Token을 입력하세요 : ')
+chatId = input('Chat Id를 입력하세요 : ')
+
+pswd = getpass.getpass('비밀번호를 입력하세요')
 
 
 # 드라이버 로드 (브라우저 실행)
@@ -90,7 +94,8 @@ while not is_find_ticket:
                     break
                 except:
                     print('특실 매진')
-        driver.find_element(By.XPATH, r'//*[@id="center"]/div[3]/p').click()
+        if not is_find_ticket:
+            driver.find_element(By.XPATH, r'//*[@id="center"]/div[3]/p').click()
         timeout = 0
     except:
         timeout += 1
@@ -101,6 +106,8 @@ while not is_find_ticket:
 
 # 예매 프로세스
 if is_find_ticket:
+    print('예매 성공!')
+    km.send_telegram_message(botToken, chatId)
     sleep(random.randint(1,5)/3)
     km.close_alert(driver)
     km.close_alert(driver)

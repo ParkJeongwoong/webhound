@@ -20,10 +20,10 @@ print('Korail KTX 자동 예매 봇 Start')
 
 # Variables
 URL = 'https://www.letskorail.com/korail/com/login.do'
-month = 9
-day = 12
-from_time = '09:10'
-to_time = '14:00'
+month = input('월 입력 (숫자) : ')
+day = input('일 입력 (숫자) : ')
+first_time = input('가장 빠른 출발 시간 입력 (오전 7시 = 07, 오후 2시 = 14) : ')
+last_time = input('가장 늦은 출발 시간 입력 (오전 7시 = 07, 오후 2시 = 14) : ')
 is_find_ticket = False
 timeout = 0
 cnt = 0
@@ -50,15 +50,29 @@ id_box.send_keys('1373361352')
 sleep(random.randint(1,5)/3)
 password_box = driver.find_element(By.ID, r'txtPwd')
 password_box.send_keys(pswd)
+driver.find_element(By.XPATH, r'//*[@id="loginDisplay1"]/ul/li[3]/a').click()
 
 # 로그인 후 페이지 이동
-driver.find_element(By.XPATH, r'//*[@id="loginDisplay1"]/ul/li[3]/a').click()
-print('로그인 성공')
+try:
+    sleep(random.randint(1,5)/5)
+    driver.get(url='https://www.letskorail.com/ebizprd/EbizPrdTicketpr21100W_pr21110.do')
+    print('로그인 성공')
 
-sleep(random.randint(1,5)/5)
-driver.get(url='https://www.letskorail.com/ebizprd/EbizPrdTicketpr21100W_pr21110.do')
+    departure = input('출발역 : ')
+    arrival = input('도착역 : ')
+except:
+    print('로그인 실패')
+
 driver.find_element(By.XPATH, r'//*[@id="s_month"]').send_keys(month)
 driver.find_element(By.XPATH, r'//*[@id="s_day"]').send_keys(day)
+driver.find_element(By.XPATH, r'//*//*[@id="s_hour"]').send_keys(int(first_time))
+departure_box = driver.find_element(By.XPATH, r'//*[@id="start"]')
+arrival_box = driver.find_element(By.XPATH, r'//*[@id="get"]')
+departure_box.clear()
+arrival_box.clear()
+departure_box.send_keys(departure)
+arrival_box.send_keys(arrival)
+
 driver.find_element(By.XPATH, r'//*[@id="center"]/form/div/p/a').click()
 
 # 예약 시작
@@ -73,8 +87,8 @@ while not is_find_ticket:
         print(str(cnt) + '차 시도')
         results = driver.find_elements(By.XPATH, r'//*[@id="tableResult"]/tbody/tr')
         for result in results:
-            start_time = result.find_element(By.XPATH, r'./td[3]').text.replace('신경주\n','')
-            if km.time_to_int(from_time) < km.time_to_int(start_time) and km.time_to_int(start_time) < km.time_to_int(to_time):
+            start_time = result.find_element(By.XPATH, r'./td[3]').text.replace('서울\n','')
+            if km.time_to_int(first_time+':00') < km.time_to_int(start_time) and km.time_to_int(start_time) < km.time_to_int(last_time+':00'):
                 print('출발시간 : ' + start_time)
                 # 일반실
                 try:

@@ -1,3 +1,4 @@
+from pickle import TRUE
 import selenium
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -9,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from pyvirtualdisplay import Display # 리눅스용
+from webdriver_manager.chrome import ChromeDriverManager
 
 from time import sleep
 import random
@@ -40,10 +42,11 @@ virtual_display = Display(visible=0, size=(800, 600)) # 리눅스용
 virtual_display.start() # 리눅스용
 
 options = webdriver.ChromeOptions()
+options.headless = TRUE
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 print(os.getcwd())
 # driver = webdriver.Chrome(executable_path=r'{}'.format(os.getcwd()+'/chromedriver'), options=options)
-driver = webdriver.Chrome(executable_path='chromedriver', options=options)
+driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
 
 # URL 설정
 driver.get(url=URL)

@@ -5,6 +5,8 @@ $ python -m venv venv
 $ source venv/scripts/activate
 (venv)  --> 이거 뜨고 나서
 $ pip install -r requirements.txt --> 이러면 requirements.txt에 있는 라이브러리 설치
+
+$ deactivate --> 가상환경 해제
 ```
 
 requirements.txt 예시

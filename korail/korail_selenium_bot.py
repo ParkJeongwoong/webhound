@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
+from pyvirtualdisplay import Display # 리눅스용
 
 from time import sleep
 import random
@@ -35,6 +36,9 @@ pswd = getpass.getpass('비밀번호를 입력하세요')
 
 
 # 드라이버 로드 (브라우저 실행)
+virtual_display = Display(visible=0, size=(800, 600)) # 리눅스용
+virtual_display.start() # 리눅스용
+
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 print(os.getcwd())

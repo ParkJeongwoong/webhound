@@ -42,7 +42,8 @@ virtual_display.start() # 리눅스용
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 print(os.getcwd())
-driver = webdriver.Chrome(executable_path=r'{}'.format(os.getcwd()+'/chromedriver'), options=options)
+# driver = webdriver.Chrome(executable_path=r'{}'.format(os.getcwd()+'/chromedriver'), options=options)
+driver = webdriver.Chrome(executable_path='chromedriver', options=options)
 
 # URL 설정
 driver.get(url=URL)

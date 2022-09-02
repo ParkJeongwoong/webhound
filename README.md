@@ -1,3 +1,5 @@
+사용 전 ! root 폴더에 chromedriver.exe 필요
+
 ```sh
 $ python -m venv venv
 $ source venv/scripts/activate

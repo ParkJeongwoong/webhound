@@ -58,6 +58,10 @@ try:
     driver.get(url='https://www.letskorail.com/ebizprd/EbizPrdTicketpr21100W_pr21110.do')
     print('로그인 성공')
 
+    driver.switch_to.window(driver.window_handles[1])
+    driver.close()
+    driver.switch_to.window(driver.window_handles[0])
+    # km.close_new_tabs(driver)
     departure = input('출발역 : ')
     arrival = input('도착역 : ')
 except:
@@ -87,7 +91,10 @@ while not is_find_ticket:
         print(str(cnt) + '차 시도')
         results = driver.find_elements(By.XPATH, r'//*[@id="tableResult"]/tbody/tr')
         for result in results:
-            start_time = result.find_element(By.XPATH, r'./td[3]').text.replace('서울\n','')
+            start_time = result.find_element(By.XPATH, r'./td[3]').text
+            if not start_time.startswith(departure):
+                continue
+            start_time = start_time.replace(departure+'\n','')
             if km.time_to_int(first_time+':00') < km.time_to_int(start_time) and km.time_to_int(start_time) < km.time_to_int(last_time+':00'):
                 print('출발시간 : ' + start_time)
                 # 일반실
@@ -114,7 +121,7 @@ while not is_find_ticket:
     except:
         timeout += 1
         print('로딩 지연 발생' + '(' + str(timeout) + ')')
-        if timeout == 10:
+        if timeout == 3:
             print('로딩 문제로 종료')
             break
 

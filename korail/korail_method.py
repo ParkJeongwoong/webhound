@@ -13,7 +13,9 @@ def close_alert(driver):
         print('no alert')
 
 def close_new_tabs(driver):
+    print(driver)
     tabs = driver.window_handles
+    print(tabs)
     while len(tabs) != 1:
         driver.switch_to.window(tabs[1])
         driver.close()

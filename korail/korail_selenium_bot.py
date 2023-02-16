@@ -70,8 +70,8 @@ try:
     driver.get(url='https://www.letskorail.com/ebizprd/EbizPrdTicketpr21100W_pr21110.do')
     print('로그인 성공')
 
-    driver.switch_to.window(driver.window_handles[1])
-    driver.close()
+    # driver.switch_to.window(driver.window_handles[1])
+    # driver.close()
     driver.switch_to.window(driver.window_handles[0])
     # km.close_new_tabs(driver)
     departure = input('출발역 : ')

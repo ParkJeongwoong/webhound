@@ -1,3 +1,4 @@
+from pickle import TRUE
 import selenium
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -8,7 +9,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.service import Service
 from pyvirtualdisplay import Display # 리눅스용
+# from webdriver_manager.chrome import ChromeDriverManager
 
 from time import sleep
 import random
@@ -39,11 +42,15 @@ pswd = getpass.getpass('비밀번호를 입력하세요')
 virtual_display = Display(visible=0, size=(800, 600)) # 리눅스용
 virtual_display.start() # 리눅스용
 
-options = webdriver.ChromeOptions()
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-print(os.getcwd())
+# options = webdriver.ChromeOptions()
+#options.headless = TRUE
+# options.add_argument('--headless')
+# options.add_experimental_option("excludeSwitches", ["enable-logging"])
+# print(os.getcwd())
 # driver = webdriver.Chrome(executable_path=r'{}'.format(os.getcwd()+'/chromedriver'), options=options)
-driver = webdriver.Chrome(executable_path='chromedriver', options=options)
+# driver = webdriver.Chrome(executable_path='#!/home/dvlprjw/app/step2/webcheck/korail/chromedriver', options=options)
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
 
 # URL 설정
 driver.get(url=URL)
